@@ -2,13 +2,6 @@ const router = require('express').Router();
 const Test = require('../db/models/test');
 const Student = require('../db/models/student');
 
-router.get('/passing', async (req, res, next) => {
-  try {
-    const tests = await Test.passing();
-    res.json(tests);
-  } catch (error) { next(error)}
-});
-
 router.get('/', async (req, res, next) => {
   try {
     const tests = await Test.findAll();
@@ -21,17 +14,6 @@ router.get('/:id', async (req, res, next) => {
     const test = await Test.findById(req.params.id);
     res.json(test);
   } catch (error) { next(error)}
-});
-
-router.get('/subject/:subject', async (req, res, next) => {
-  try {
-    const test = await Test.findAll({
-      where: {
-        subject: req.params.subject
-      }
-    })
-    res.json(test);
-  } catch (error) { next(error) }
 });
 
 router.post('/student/:studentId', async (req, res, next) => {
