@@ -7,8 +7,9 @@ const agent = request.agent(app);
 
 const db = require('../db/db');
 const Promise = require('bluebird');
-const Student = require('../db/models/students');
-const Test = require('../db/models/tests');
+const Student = require('../db/models/student');
+const Test = require('../db/models/test');
+
 describe('Routes', () => {
   before(() => {
     return db.sync({ force: true });
@@ -71,7 +72,7 @@ describe('Routes', () => {
           .expect(200)
           .expect(res => {
             if (typeof res.body === 'string') res.body = JSON.parse(res.body);
-            expect(res.body.fullName).to.equal('Pepper Potts');
+            expect(res.body.firstName).to.equal('Pepper');
           });
       });
 
@@ -92,7 +93,7 @@ describe('Routes', () => {
           .expect(201)
           .expect('Content-Type', /json/)
           .expect(res => {
-            expect(res.body.fullName).to.equal('SQL PRK');
+            expect(res.body.firstName).to.equal('SQL');
           });
       });
     });
@@ -105,7 +106,7 @@ describe('Routes', () => {
           .expect(200)
           .expect('Content-Type', /json/)
           .expect(res => {
-            expect(res.body.fullName).to.equal('Salty Potts');
+            expect(res.body.firstName).to.equal('Salty');
           });
       });
     });
@@ -116,7 +117,8 @@ describe('Routes', () => {
           .delete(`/students/${charlie.id}`)
           .expect(204)
           .expect(() => {
-            return Student.findById(charlie.id).then(res =>
+            return Student.findById(charlie.id)
+              .then(res =>
               expect(res).to.equal(null)
             );
           });
@@ -181,30 +183,6 @@ describe('Routes', () => {
           .expect(200)
           .expect(res => {
             expect(res.body.subject).to.equal(funTest.subject);
-          });
-      });
-    });
-
-    describe('GET /tests/passing', () => {
-      xit('gets all the tests that are passing', () => {
-        return agent
-          .get('/tests/passing')
-          .expect(200)
-          .expect(res => {
-            expect(res.body).to.be.an.instanceOf(Array);
-            expect(res.body).to.have.length(2);
-          });
-      });
-    });
-
-    describe('GET /tests/subject/:subject', () => {
-      xit('gets all the tests by subject', () => {
-        return agent
-          .get(`/tests/subject/${badTest.subject}`)
-          .expect(200)
-          .expect(res => {
-            expect(res.body).to.be.an.instanceOf(Array);
-            expect(res.body).to.have.length(2);
           });
       });
     });

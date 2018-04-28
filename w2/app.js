@@ -3,8 +3,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const db = require('./db/db');
-const students = require('./routes/student');
-const tests = require('./routes/test');
+const students = require('./routes/students');
+const tests = require('./routes/tests');
 
 app.use(bodyParser.json());
 

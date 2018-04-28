@@ -5,30 +5,26 @@
 ### Details
 
 	- Necessary Models:
-		- Student 
-		- Test  
+		- Student
+		- Test
 
-	- Necessary routes: 
+	- Necessary routes:
 
 		- Get all students
 
-		- Get all test scores
+		- Get one student
 
-		- Update student name
+		- Create new student
 
-		- Update test score 
+		- Delete a student
 
-		- Get mean test score by student ID
+		- Get all tests
 
-		- Get top scoring student
+		- Get one test
 
-		- Delete Student
+		- Create a test, belonging to a student
 
-		- Delete Score
-
-		- Add Student
-
-		- Add Score
+		- Delete a test
 
 
 

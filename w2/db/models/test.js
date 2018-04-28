@@ -1,8 +1,7 @@
 'use strict';
 const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
 const db = require('../db');
-const Student = require('./students');
+const Student = require('./student');
 
 const Test = db.define('test', {
   subject: {
@@ -14,24 +13,6 @@ const Test = db.define('test', {
     allowNull: false
   }
 });
-
-Test.passing = function() {
-  return Test.findAll({
-    where: {
-      grade: {
-        [Op.gt]: 70
-      }
-    }
-  });
-};
-
-Test.findBySubject = function(type) {
-  return Test.findAll({
-    where: {
-      subject: type
-    }
-  });
-};
 
 Test.belongsTo(Student, { as: 'student' });
 

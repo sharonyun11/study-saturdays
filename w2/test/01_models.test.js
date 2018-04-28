@@ -2,8 +2,8 @@
 
 const chai = require('chai');
 const expect = chai.expect;
-const Student = require('../db/models/students');
-const Test = require('../db/models/tests');
+const Student = require('../db/models/student');
+const Test = require('../db/models/test');
 const db = require('../db/db');
 const Promise = require('bluebird');
 
@@ -92,42 +92,26 @@ describe('Models', function() {
       //end of `attributes definition` describe block
     });
 
-    describe('options definition', () => {
-      describe('`fullName` virtual field', () => {
-        xit('returns the full name', () => {
-          expect(student.fullName).to.equal(`${firstName} ${lastName}`);
+    describe('a `pre` create hook', () => {
+      let newStudent;
+      beforeEach(() => {
+        newStudent = Student.build({
+          firstName: 'charles',
+          lastName: 'xavier',
+          email: 'charlie@brainy.com'
         });
       });
 
-      describe('a `pre` create hook', () => {
-        let newStudent;
-        beforeEach(() => {
-          newStudent = Student.build({
-            firstName: 'charles',
-            lastName: 'xavier',
-            email: 'charlie@brainy.com'
-          });
-        });
-
-        xit('capitalizes the first letter of the first and last name before save to the DB', () => {
-          return newStudent.save().then(savedStudent => {
-            expect(savedStudent.firstName).to.equal('Charles');
-            expect(savedStudent.lastName).to.equal('Xavier');
-          });
+      xit('capitalizes the first letter of the first and last name before save to the DB', () => {
+        return newStudent.save().then(savedStudent => {
+          expect(savedStudent.firstName).to.equal('Charles');
+          expect(savedStudent.lastName).to.equal('Xavier');
         });
       });
+    });
       //end of `options definition` describe block
-    });
 
-    describe('instance methods', () => {
-      describe('initials', () => {
-        xit('should return the initials of a student', () => {
-          return student.save().then(savedStudent => {
-            expect(savedStudent.initials()).to.equal('P P');
-          });
-        });
-      });
-    });
+
     //end of `The Students model` describe block
   });
   describe('The `Test` model', function() {
@@ -180,35 +164,6 @@ describe('Models', function() {
       //end of `attributes definition` describe block
     });
 
-    describe('class methods', () => {
-      beforeEach(() => {
-        return Promise.all([
-          Test.create({ subject: 'Outdoor Survival', grade: 67 }),
-          Test.create({ subject: 'Competitive Eating', grade: 92 }),
-          Test.create({ subject: 'Javascript 101', grade: 98 }),
-          Test.create({ subject: 'Wind Surfing', grade: 52 }),
-          Test.create({ subject: 'Outdoor Survival', grade: 90 })
-        ]);
-      });
-
-      describe('passing', () => {
-        xit('should return the test instances that have grade greater than 70', () => {
-          return Test.passing().then(foundTests => {
-            expect(foundTests).to.be.an.instanceOf(Array);
-            expect(foundTests).to.have.length(3);
-          });
-        });
-      });
-      describe('findBySubject', () => {
-        xit('should return all instances by given subject', () => {
-          return Test.findBySubject('Outdoor Survival').then(foundTests => {
-            expect(foundTests).to.be.an.instanceOf(Array);
-            expect(foundTests).to.have.length(2);
-          });
-        });
-      });
-    });
-
     describe('associations', () => {
       xit('belongs to a student', () => {
         const newStudent = Student.create({
@@ -232,7 +187,7 @@ describe('Models', function() {
           })
           .then(foundTest => {
             expect(foundTest).to.exist; //eslint-disable-line no-unused-expressions
-            expect(foundTest.student.fullName).to.equal('Pepper Potts');
+            expect(foundTest.student.firstName).to.equal('Pepper');
           });
       });
     });
