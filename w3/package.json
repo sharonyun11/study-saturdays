@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon app.js & webpack -w",
     "build": "webpack",
-    "build-watch" : "webpack -w"
+    "build-watch" : "webpack -w",
+    "seed": "node db/seed.js"
   },
   "author": "myself",
   "license": "ISC",
