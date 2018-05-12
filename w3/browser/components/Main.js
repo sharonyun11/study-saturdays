@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
-import StudentList from './StudentList.js' 
-import SingleStudent from './SingleStudent.js' 
+import StudentList from './StudentList.js'
+import SingleStudent from './SingleStudent.js'
 
 export default class Main extends Component {
     constructor(props){
@@ -22,7 +22,9 @@ export default class Main extends Component {
     getStudents(){
         console.log("fetching")
         axios.get('/student')
-        .then(res => this.setState({students: res.data}))
+        .then(res => {
+            this.setState({students: res.data})
+        })
         .catch(console.error)
     }
 
@@ -43,12 +45,12 @@ export default class Main extends Component {
                             <th>Tests</th>
                         </tr>
                     </thead>
-                    < StudentList students={this.state.students} selectStudent={this.selectStudent} />
+                    <StudentList students={this.state.students} selectStudent={this.selectStudent} />
                 </table>
                 {
                     this.state.selectedStudent.id ? <SingleStudent student={this.state.selectedStudent} /> : null
                 }
-               
+
             </div>
         )
     }
